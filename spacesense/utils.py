@@ -137,7 +137,8 @@ def clip_to_aoi(source_raster, aoi_geometry, save_folder, save_format='tiff'):
     aoi_name = aoi_geometry.split('/')[-1].split('.')[0]
     source_raster_name = source_raster.split('/')[-1].split('.')[0]
     new_file_path = save_folder +'/'+aoi_name+'_'+source_raster_name+'.'+save_format
-    command = 'gdalwarp --config GDALWARP_IGNORE_BAD_CUTLINE YES -cutline '+aoi_geometry+' -crop_to_cutline -dstalpha '+source_raster+' '+new_file_path
+    command = 'gdalwarp -of GTiff -cutline '+aoi_geometry+' -cl '+aoi_name+' -crop_to_cutline --config GDALWARP_IGNORE_BAD_CUTLINE YES -dstalpha '+source_raster+' '+new_file_path
+    #command = 'gdalwarp --config GDALWARP_IGNORE_BAD_CUTLINE YES -cutline '+aoi_geometry+' -crop_to_cutline -dstalpha '+source_raster+' '+new_file_path
     os.system(command)
     print(new_file_path.split('/')[-1]+' done!')
 
